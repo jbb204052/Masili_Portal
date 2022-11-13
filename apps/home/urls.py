@@ -23,6 +23,7 @@ urlpatterns = [
     # Residents
     path('residents/', views.residents_list, name='brgy_residents'),
     path('residents/add/', views.resident_add, name='brgy_resident_add'),
-    # path('residents/edit/<int:id>', views.residents_edit, name='brgy_residents_edit'),
+    path('residents/edit/<int:id>', views.resident_edit, name='brgy_residents_edit'),
     path('residents/delete/<int:id>', views.resident_delete, name='brgy_residents_delete'),
+    path('resident/views/<int:id>', views.resident_view, name='resident_view'),
 ]

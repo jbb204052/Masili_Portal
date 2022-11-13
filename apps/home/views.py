@@ -46,7 +46,7 @@ def brgy_info(request):
     else:
         form = forms.BrgyInfoForm(instance=_data)
         context = {'form': form, 'segment': {'brgy_info', 'general'}, 'data': _data}
-    html_template = loader.get_template('home/brgy_info.html')
+    html_template = loader.get_template('home/brgy_info/brgy_info.html')
     return HttpResponse(html_template.render(context, request))
 
 # PUROK
@@ -149,11 +149,35 @@ def resident_add(request):
         if form.is_valid():
             form.save(commit=True)
             messages.success(request, 'Resident added successfully')
-            return redirect('residents_list')
+            return redirect('brgy_residents')
         else:
             messages.error(request, 'Error adding resident')
 
     form = forms.ResidentForm()
     context = {'segment': {'residents', 'add'}, 'form': form}
+    html_template = loader.get_template('home/residents/residents_add.html')
+    return HttpResponse(html_template.render(context, request))
+
+def resident_view(request, id=0):
+    resident = models.Resident.objects.get(pk=id)
+    full_name = resident.res_lname + ', ' + resident.res_fname + ' ' + resident.res_mname
+    context = {'segment': {'residents', 'view'}, 'resident': resident, 'full_name': full_name}
+    html_template = loader.get_template('home/residents/resident_view.html')
+    return HttpResponse(html_template.render(context, request))
+
+
+def resident_edit(request, id=0):
+    resident = models.Resident.objects.get(pk=id)
+    if request.method == 'POST':
+        form = forms.ResidentForm(request.POST, instance=resident)
+        if form.is_valid():
+            form.save(commit=True)
+            messages.success(request, 'Resident updated successfully')
+            return redirect('brgy_residents')
+        else:
+            messages.error(request, 'Error updating resident')
+
+    form = forms.ResidentForm(instance=resident)
+    context = {'segment': {'residents', 'update'}, 'form': form, 'resident': resident}
     html_template = loader.get_template('home/residents/residents_add.html')
     return HttpResponse(html_template.render(context, request))

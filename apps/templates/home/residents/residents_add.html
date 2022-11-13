@@ -13,7 +13,7 @@
     </div>
 
     <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="feather icon-home"></i></a></li>
         <li class="breadcrumb-item"><a href="{% url 'brgy_residents' %}">List of Residents</a></li>
         <li class="breadcrumb-item"><a href="javascript:">
             {% if 'add' in segment %}
@@ -25,144 +25,158 @@
 {% endblock %}
 
 {% block resident_view %}
-    <div class="col-sm-9">
-        <div class="card">
-            <div class="card-header">
-                <h5>Resident Data</h5>
-            </div>
-            <div class="card-block">
-                <div class="row">
+        <form class="row" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-sm-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Resident Data</h5>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
 
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Lastname</label>
-                            {{ form.res_lname }}
-                        </div>
-                    </div>
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label>Firstname</label>
-                            {{ form.res_fname }}
-                        </div>
-                    </div>
-                    <div class="col-sm-3 mb-4">
-                        <div class="form-group">
-                            <label>Middlename</label>
-                            {{ form.res_fname }}
-                        </div>
-                    </div>
-                    <div class="col-sm-1 mb-4">
-                        <div class="form-group">
-                            <label>Ext.</label>
-                            {{ form.res_extname}}
-                        </div>
-                    </div>
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="fn">Gender</label>
-                            {{ form.res_gender }}
-                        </div>
-                    </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Lastname</label>
+                                    {{ form.res_lname }}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label>Firstname</label>
+                                    {{ form.res_fname }}
+                                </div>
+                            </div>
+                            <div class="col-sm-3 mb-4">
+                                <div class="form-group">
+                                    <label>Middlename</label>
+                                    {{ form.res_mname }}
+                                </div>
+                            </div>
+                            <div class="col-sm-1 mb-4">
+                                <div class="form-group">
+                                    <label>Ext.</label>
+                                    {{ form.res_extname}}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="fn">Gender</label>
+                                    {{ form.res_gender }}
+                                </div>
+                            </div>
 
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="fn">Is Voter?</label>
-                            {{ form.res_isVoter }}
-                        </div>
-                    </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="fn">Is Voter?</label>
+                                    {{ form.res_isVoter }}
+                                </div>
+                            </div>
 
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="fn">Civil Status</label>
-                            {{ form.res_civil_status }}
-                        </div>
-                    </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="fn">Civil Status</label>
+                                    {{ form.res_civil_status }}
+                                </div>
+                            </div>
 
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="ln">Birthdate</label>
-                            {{ form.res_bdate }}
-                        </div>
-                    </div>
-                    <div class="col-sm-8 mb-4">
-                        <div class="form-group">
-                            <label for="ln">Birth place</label>
-                            {{ form.res_place_of_birth }}
-                        </div>
-                    </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">Birthdate</label>
+                                    {{ form.res_bdate }}
+                                </div>
+                            </div>
+                            <div class="col-sm-8 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">Birth place</label>
+                                    {{ form.res_place_of_birth }}
+                                </div>
+                            </div>
 
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="ln">Nationality</label>
-                            {{ form.res_nationality }}
-                        </div>
-                    </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">Nationality</label>
+                                    {{ form.res_nationality }}
+                                </div>
+                            </div>
 
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="ln">Religion</label>
-                            {{ form.res_religion }}
-                        </div>
-                    </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">Religion</label>
+                                    {{ form.res_religion }}
+                                </div>
+                            </div>
 
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="ln">Occupation</label>
-                            {{ form.res_occupation }}
-                        </div>
-                    </div>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">Occupation</label>
+                                    {{ form.res_occupation }}
+                                </div>
+                            </div>
 
-                    <b class="m-b-5">CURRENT ADDRESS</b>
-                    <div class="col-sm-4 mb-4">
-                        <div class="form-group">
-                            <label for="ln">Purok</label>
-                            {{ form.res_purok }}
-                        </div>
-                    </div>
-                    <div class="col-sm-8 mb-4">
-                        <div class="form-group">
-                            <label for="ln">House No./Street/Block</label>
-                            {{ form.res_address1 }}
-                        </div>
-                    </div>
+                            <b class="m-b-5">CURRENT ADDRESS</b>
+                            <div class="col-sm-4 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">Purok</label>
+                                    {{ form.res_purok }}
+                                </div>
+                            </div>
+                            <div class="col-sm-8 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">House No./Street/Block</label>
+                                    {{ form.res_address1 }}
+                                </div>
+                            </div>
 
-                    <b class="m-b-5">CONTACT INFORMATION</b>
-                    <div class="col-sm-6 mb-4">
-                        <div class="form-group">
-                            <label for="ln">Phone Number</label>
-                            {{ form.res_contactNo }}
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mb-4">
-                        <div class="form-group">
-                            <label for="ln">Email</label>
-                            {{ form.res_email}}
-                        </div>
-                    </div>
-                    <div class="col-sm-12 mb-2">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
+                            <b class="m-b-5">CONTACT INFORMATION</b>
+                            <div class="col-sm-6 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">Phone Number</label>
+                                    {{ form.res_contactNo }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-4">
+                                <div class="form-group">
+                                    <label for="ln">Email</label>
+                                    {{ form.res_email}}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mb-2">
+                                <div class="form-group">
+                                    {% if 'add' in segment %}
+                                        <button type="submit" class="btn btn-primary float-right">Save</button>
+                                    {% elif 'update' in segment %}
+                                        <button type="submit" class="btn btn-primary float-right">Update</button>
+                                    {% endif %}
+                                <a class="btn btn-light float-right">Back</a>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="card">
-            <div class="card-header">
-                <h5>Resident Photo</h5>
-            </div>
-            <div class="card-block">
-                <div class="d-flex flex-column align-items-center">
-                    <img src="{{ data.res_photo.url }}" class="img-radius img-fluid w-75" id="res_photo_view">
-                    <br>
-                    {{ form.res_photo }}
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Resident Photo</h5>
+                    </div>
+                    <div class="card-block">
+                        <div class="d-flex flex-column align-items-center">
+                            {% if 'update' in segment %}
+                                <img src="{{ resident.res_photo.url }}" class="img-fluid img-radius w-75" id="res_photo_view">
+                            {% else %}
+                                <img src="{{ data.res_photo.url }}" class="img-radius img-fluid w-75" id="res_photo_view">
+                            {% endif %}
+                            <br>
+                            {{ form.res_photo }}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+
 {% endblock %}
 
 {% block javascripts %}

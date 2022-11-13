@@ -1,0 +1,189 @@
+{% extends 'home/residents/residents_base.html' %}
+{% load static %}
+
+{% block header %}
+    <div class="page-header-title">
+        <h5 class="m-b-10">
+            Resident Data
+        </h5>
+    </div>
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="feather icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'brgy_residents' %}">List of Residents</a></li>
+        <li class="breadcrumb-item"><a href="javascript:">Resident</a></li>
+        <li class="breadcrumb-item"><a href="javascript:">
+            {{ full_name }}
+        </a></li>
+    </ul>
+{% endblock %}
+
+{% block resident_view %}
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Resident Data</h5>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label>Lastname</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_lname }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label>Firstname</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_fname }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 mb-4">
+                            <div class="form-group">
+                                <label>Middlename</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_mname }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-1 mb-4">
+                            <div class="form-group">
+                                <label>Ext.</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_extname }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label for="fn">Gender</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_gender }}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label for="fn">Is Voter?</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_isVoter }}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label for="fn">Civil Status</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_civil_status}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label for="ln">Birthdate</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_bdate}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-8 mb-4">
+                            <div class="form-group">
+                                <label for="ln">Birth place</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_place_of_birth }}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label for="ln">Nationality</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_nationality }}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label for="ln">Religion</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_religion}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label for="ln">Occupation</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_occupation }}">
+                            </div>
+                        </div>
+
+                        <b class="m-b-5">CURRENT ADDRESS</b>
+                        <div class="col-sm-4 mb-4">
+                            <div class="form-group">
+                                <label for="ln">Purok</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_purok }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-8 mb-4">
+                            <div class="form-group">
+                                <label for="ln">House No./Street/Block</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_address1 }}">
+                            </div>
+                        </div>
+
+                        <b class="m-b-5">CONTACT INFORMATION</b>
+                        <div class="col-sm-6 mb-4">
+                            <div class="form-group">
+                                <label for="ln">Phone Number</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_contactNo }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <div class="form-group">
+                                <label for="ln">Email</label>
+                                <input class="form-control"
+                                       readonly value="{{ resident.res_email }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <div class="form-group float-right">
+                                <a href="{% url 'brgy_residents_edit' resident.id %}" type="button" class="btn btn-primary">Update</a>
+                                <a href="{% url 'brgy_residents' %}" class="btn btn-light">Back</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Resident Photo</h5>
+                </div>
+                <div class="card-block">
+                    <div class="d-flex flex-column align-items-center">
+                        <img src="{{ resident.res_photo.url }}" class="img-radius img-fluid w-75" id="res_photo_view">
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{% static 'assets/plugins/imask.min.js' %}"></script>
+    <script>
+        var regExpMask = IMask(document.querySelector('.mob_no'),{ mask:'00000000000' });
+        document.getElementById('res_photo_input').onchange = (e) => {
+            document.getElementById('res_photo_view').setAttribute('src', URL.createObjectURL(e.target.files[0]))
+        }
+    </script>
+{% endblock %}

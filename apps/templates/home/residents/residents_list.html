@@ -7,69 +7,71 @@
 
     <ul class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="feather icon-home"></i></a></li>
-        <li class="breadcrumb-item"><a href="/">Residents</a></li>
+        <li class="breadcrumb-item"><a href="/">List of Residents</a></li>
     </ul>
 {% endblock %}
 
 {% block resident_view %}
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header">
-                <h5>List of Residents</h5>
-                <a class="btn btn-outline-success float-right" href='{% url 'brgy_resident_add' %}'><i class="fas fa-plus"></i>Import Data</a>
-                <a class="btn btn-outline-primary float-right" href='{% url 'brgy_resident_add' %}'><i class="fas fa-plus"></i>Add New Resident</a>
-            </div>
-            <div class="card-block table-border-style">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>List of Residents</h5>
+                    <a class="btn btn-outline-success float-right" href='{% url 'brgy_resident_add' %}'><i class="fas fa-plus"></i>Import Data</a>
+                    <a class="btn btn-outline-primary float-right" href='{% url 'brgy_resident_add' %}'><i class="fas fa-plus"></i>Add New Resident</a>
+                </div>
+                <div class="card-block table-border-style">
 
-                {% for message in messages %}
-                    {% if 'success' in message.tags %}
-                        <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
-                    {% else %}
-                        <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
-                    {% endif %}
-                {% endfor %}
+                    {% for message in messages %}
+                        {% if 'success' in message.tags %}
+                            <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+                        {% else %}
+                            <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+                        {% endif %}
+                    {% endfor %}
 
-                <div class="table-responsive">
-                    <table id="example1" class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>Lastname</th>
-                            <th>Firstname</th>
-                            <th>Middlename</th>
-                            <th>Ext.</th>
-                            <th>Gender</th>
-                            <th>Birthdate</th>
-                            <td>Actions</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for resident in data %}
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
                             <tr>
-                                <td>{{ resident.res_lname }}</td>
-                                <td>{{ resident.res_fname }}</td>
-                                <td>{{ resident.res_mname }}</td>
-                                <td>{{ resident.res_extname }}</td>
-                                <td>{{ resident.res_gender }}</td>
-                                <td>{{ resident.res_bdate }}</td>
-                                <td>
-                                    <a class="btn btn-icon btn-outline-primary" href="{% url 'brgy_purok_edit' resident.id %}"><i class="fas fa-edit"></i></a>
-                                    <a class="btn btn-icon btn-outline-danger" href="{% url 'brgy_purok_delete' resident.id %}"><i class="fas fa-trash"></i></a>
-                                </td>
+                                <th>Lastname</th>
+                                <th>Firstname</th>
+                                <th>Middlename</th>
+                                <th>Ext.</th>
+                                <th>Gender</th>
+                                <th>Birthdate</th>
+                                <td>Actions</td>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>Lastname</th>
-                            <th>Firstname</th>
-                            <th>Middlename</th>
-                            <th>Ext.</th>
-                            <th>Gender</th>
-                            <th>Birthdate</th>
-                            <td>Actions</td>
-                        </tr>
-                        </tfoot>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {% for resident in data %}
+                                <tr>
+                                    <td>{{ resident.res_lname }}</td>
+                                    <td>{{ resident.res_fname }}</td>
+                                    <td>{{ resident.res_mname }}</td>
+                                    <td>{{ resident.res_extname }}</td>
+                                    <td>{{ resident.res_gender }}</td>
+                                    <td>{{ resident.res_bdate }}</td>
+                                    <td>
+                                        <a class="btn btn-icon btn-outline-primary" href="{% url 'resident_view' resident.id %}"><i class="fas fa-info"></i></a>
+                                        <a class="btn btn-icon btn-outline-danger" href="{% url 'brgy_purok_delete' resident.id %}"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Lastname</th>
+                                <th>Firstname</th>
+                                <th>Middlename</th>
+                                <th>Ext.</th>
+                                <th>Gender</th>
+                                <th>Birthdate</th>
+                                <td>Actions</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
