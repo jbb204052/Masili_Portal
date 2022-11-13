@@ -1,0 +1,43 @@
+{% extends 'home/purok/purok_base.html' %}
+
+{% block header %}
+
+    <div class="page-header-title">
+        <h5 class="m-b-10">
+            Delete Purok
+        </h5>
+    </div>
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'brgy_info' %}">Barangay Information</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'brgy_purok' %}">List of Purok</a></li>
+        <li class="breadcrumb-item"><a href="javascript:">Delete</a></li>
+    </ul>
+{% endblock %}
+
+{% block purok_view %}
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                Are you sure?
+            </h5>
+        </div>
+        <div class="card-block table-border-style">
+            <form action="#" method="post">
+                {% csrf_token %}
+                <p>Are you sure you want to delete the selected purok?</p>
+                <br>
+                <p><b>Summary</b></p>
+                <p class="m-l-20"><b>Purok:</b> {{ purok.purok_name }}</p>
+                <p class="m-l-20"><b>Description:</b> {{ purok.purok_description }}</p>
+                <button type="submit" class="btn btn-danger">Yes, I'm sure</button>
+                <a href="{% url 'brgy_purok' %}" class="btn btn-primary">No, take me back</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

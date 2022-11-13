@@ -1,0 +1,138 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Profile {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">General Information</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="#!">Barangay Information</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">General Info</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Edit Info</h5>
+                                            </div>
+                                            <div class="card-block">
+                                                <div class="row">
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="form-group">
+                                                            <label>Barangay Name</label>
+{#                                                            <input class="form-control" placeholder="Barangay Name" name="brgy_name">#}
+                                                            {{ form.brgy_name }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="form-group">
+                                                            <label>City</label>
+                                                            {{ form.brgy_city }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="form-group">
+                                                            <label>Province</label>
+                                                            {{ form.brgy_province }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="form-group">
+                                                            <label>Phone Number</label>
+                                                            {{ form.brgy_contactNo }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            {{ form.brgy_email }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 mb-4">
+                                                        <div class="form-group">
+                                                            <label>History of the Barangay</label>
+                                                            {{ form.brgy_history }}
+                                                            <small id="abf" class="form-text text-muted">History will be shown to the residents interface</small>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-12 mb-2">
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Barangy Logo</h5>
+                                            </div>
+                                            <div class="card-block">
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <img src="{{ data.brgy_logo.url }}" class="img-radius img-fluid w-75" id="brgy_logo_view">
+                                                    <br>
+                                                    {{ form.brgy_logo }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="{% static 'assets/plugins/imask.min.js' %}"></script>
+    <script>
+        var regExpMask = IMask(document.querySelector('.mob_no'),{ mask:'00000000000' });
+        document.getElementById('brgy_logo_input').onchange = (e) => {
+            document.getElementById('brgy_logo_view').setAttribute('src', URL.createObjectURL(e.target.files[0]))
+        }
+    </script>
+{% endblock javascripts %}

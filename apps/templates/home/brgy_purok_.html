@@ -1,0 +1,231 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Purok {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+    <!-- Data Tables -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/style.min.css' %}">
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">List of Purok</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="#!">Barangay Information</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">List of Purok</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ Hover-table ] start -->
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>List</h5>
+                                            <button type="button" class="btn btn-outline-primary float-right" data-toggle="modal" data-target="#infoModal" data-url="{% url 'purok_add' %}"><i class="fas fa-plus"></i>Add New Purok</button>
+                                        </div>
+                                        <div class="card-block table-border-style">
+                                            <div class="table-responsive">
+                                                <table id="example1" class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Purok Name</th>
+                                                        <th>Purok Description</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for purok in data %}
+                                                        <tr>
+                                                            <td>{{ purok.purok_name }}</td>
+                                                            <td>{{ purok.purok_description }}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-icon btn-outline-primary" data-toggle="modal" data-target="#infoModal" data-url="{% url 'purok_update' purok.id %}"><i class="fas fa-edit"></i></button>
+                                                                <button type="button" class="btn btn-icon btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-url="{% url 'purok_delete' purok.id %}"><i class="fas fa-trash"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <th>Purok Name</th>
+                                                        <th>Purok Description</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ Hover-table ] end -->
+
+                                <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">{% if 'add' in segment %}Add New Purok{% endif %}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <label for="purok_name">Purok Name</label>
+                                                        <input type="text" class="form-control" id="purok_name" name="purok_name" placeholder="Enter Purok Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="purok_name">Purok Description</label>
+                                                        <input type="textarea" class="form-control" id="purok_description"placeholder="Description">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" id="submit">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+{% endblock %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/jszip/jszip.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/pdfmake/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/pdfmake/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false, "paging": true,
+                buttons:[
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Column Visibility'
+                    }
+                ]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+
+    </script>
+    <script>
+        $('#infoModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        $(document).ready(function (){
+            $('#submit').click(function (){
+                $purok_name = $('#purok_name').val();
+                $purok_description = $('#purok_description').val();
+
+                if($purok_name == '' || $purok_description == ''){
+                    alert('Please fill all fields');
+                }else{
+                    $.ajax({
+                        url: "{% url 'purok' %}",
+                        type: "POST",
+                        data: {
+                            purok_name: $purok_name,
+                            purok_description: $purok_description,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        success: function (response){
+                            alert(response);
+                            location.reload();
+                        },
+                        error: function (error){
+                            alert(error);
+                        }
+                    });
+                }
+            });
+            $('.edit').click(function (){
+                $purok_id = $(this).attr('id');
+                $.ajax({
+                    url: "{% url 'purok' %}",
+                    type: "GET",
+                    data: {
+                        purok_id: $purok_id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (response){
+                        $('#purok_name').val(response.purok_name);
+                        $('#purok_description').val(response.purok_description);
+                    },
+                    error: function (error){
+                        alert('Error');
+                    }
+                });
+            });
+        })
+    </script>
+{% endblock javascripts %}

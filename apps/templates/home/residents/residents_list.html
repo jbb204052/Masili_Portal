@@ -1,0 +1,141 @@
+{% extends 'home/residents/residents_base.html' %}
+{% load static %}
+{% block header %}
+    <div class="page-header-title">
+        <h5 class="m-b-10">List of Residents</h5>
+    </div>
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="feather icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="/">Residents</a></li>
+    </ul>
+{% endblock %}
+
+{% block resident_view %}
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>List of Residents</h5>
+                <a class="btn btn-outline-success float-right" href='{% url 'brgy_resident_add' %}'><i class="fas fa-plus"></i>Import Data</a>
+                <a class="btn btn-outline-primary float-right" href='{% url 'brgy_resident_add' %}'><i class="fas fa-plus"></i>Add New Resident</a>
+            </div>
+            <div class="card-block table-border-style">
+
+                {% for message in messages %}
+                    {% if 'success' in message.tags %}
+                        <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+                    {% else %}
+                        <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="table-responsive">
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Lastname</th>
+                            <th>Firstname</th>
+                            <th>Middlename</th>
+                            <th>Ext.</th>
+                            <th>Gender</th>
+                            <th>Birthdate</th>
+                            <td>Actions</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for resident in data %}
+                            <tr>
+                                <td>{{ resident.res_lname }}</td>
+                                <td>{{ resident.res_fname }}</td>
+                                <td>{{ resident.res_mname }}</td>
+                                <td>{{ resident.res_extname }}</td>
+                                <td>{{ resident.res_gender }}</td>
+                                <td>{{ resident.res_bdate }}</td>
+                                <td>
+                                    <a class="btn btn-icon btn-outline-primary" href="{% url 'brgy_purok_edit' resident.id %}"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-icon btn-outline-danger" href="{% url 'brgy_purok_delete' resident.id %}"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Lastname</th>
+                            <th>Firstname</th>
+                            <th>Middlename</th>
+                            <th>Ext.</th>
+                            <th>Gender</th>
+                            <th>Birthdate</th>
+                            <td>Actions</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/jszip/jszip.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/pdfmake/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/pdfmake/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": true, "paging": true,
+                buttons:[
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        },
+                        customize: function (doc) {
+                            doc.content[1].table.widths =
+                                Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Column Visibility'
+                    }
+                ]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+
+    </script>
+    <script>
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();
+            });
+        }, 3000);
+    </script>
+{% endblock %}

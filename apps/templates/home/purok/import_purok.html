@@ -1,0 +1,46 @@
+{% extends 'home/purok/purok_base.html' %}
+{% load static %}
+{% block header %}
+
+    <div class="page-header-title">
+        <h5 class="m-b-10">
+            Import Purok
+        </h5>
+    </div>
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'brgy_info' %}">Barangay Information</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'brgy_purok' %}">List of Purok</a></li>
+        <li class="breadcrumb-item"><a href="javascript:">Import</a></li>
+    </ul>
+{% endblock %}
+
+{% block purok_view %}
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                Import Data
+            </h5>
+        </div>
+        <div class="card-block table-border-style">
+            <p>This section will try to import data from excel or csv file. The file must follow the format as shown in the image below. If purok aleady exist in the database, it will be updated with the data from the imported file.</p>
+            <br>
+            <img src="{% static 'assets/images/import_sample/guide.png' %}" alt="Excel data sample" class="w-25">
+            <br>
+            <br>
+            <form action="#" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="file_import" class="form-control-file">
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary">Import</button>
+                <a href="{% url 'brgy_purok' %}" class="btn btn-light">Cancel Import</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

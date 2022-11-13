@@ -1,0 +1,129 @@
+{% extends 'home/purok/purok_base.html' %}
+{% load static %}
+{% block header %}
+    <div class="page-header-title">
+        <h5 class="m-b-10">List of Purok</h5>
+    </div>
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+        <li class="breadcrumb-item"><a href="{% url 'brgy_info' %}">Barangay Information</a></li>
+        <li class="breadcrumb-item"><a href="#">List of Purok</a></li>
+    </ul>
+{% endblock %}
+
+{% block purok_view %}
+    <div class="card">
+        <div class="card-header">
+            <h5>List of Purok</h5>
+            <a class="btn btn-outline-success float-right" href='{% url 'brgy_purok_import' %}'><i class="fas fa-plus"></i>Import Data</a>
+            <a class="btn btn-outline-primary float-right" href='{% url 'brgy_purok_add' %}'><i class="fas fa-plus"></i>Add New Purok</a>
+        </div>
+        <div class="card-block table-border-style">
+
+            {% for message in messages %}
+                {% if 'success' in message.tags %}
+                    <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+                {% else %}
+                    <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+                {% endif %}
+            {% endfor %}
+
+            <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Purok Name</th>
+                        <th>Purok Description</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for purok in data %}
+                        <tr>
+                            <td>{{ purok.purok_name }}</td>
+                            <td>{{ purok.purok_description }}</td>
+                            <td>
+                                <a class="btn btn-icon btn-outline-primary" href="{% url 'brgy_purok_edit' purok.id %}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-icon btn-outline-danger" href="{% url 'brgy_purok_delete' purok.id %}"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>Purok Name</th>
+                        <th>Purok Description</th>
+                        <th>Actions</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{% static 'assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/jszip/jszip.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/pdfmake/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/pdfmake/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": true, "paging": true,
+                buttons:[
+                    {
+                        extend: 'excel',
+                        text: 'Excel',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        },
+                        customize: function (doc) {
+                            doc.content[1].table.widths =
+                                Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print',
+                        exportOptions: {
+                            columns: ':visible:not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Column Visibility'
+                    }
+                ]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+
+    </script>
+    <script>
+        //close alert after 3 seconds
+        window.setTimeout(function() {
+            $(".alert").fadeTo(300, 0).slideUp(300, function(){
+                $(this).remove();
+            });
+        }, 3000);
+    </script>
+{% endblock %}
